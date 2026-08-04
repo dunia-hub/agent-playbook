@@ -1,0 +1,69 @@
+name: Agent proposal
+description: Propose a new agent for the Agent Playbook community
+title: "[Agent]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for proposing an agent. Please share enough detail for the community to understand and evaluate the idea.
+
+  - type: input
+    id: agent-name
+    attributes:
+      label: Agent name
+      placeholder: Example: Travel Planning Agent
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this agent solve?
+      description: Explain who would use it and why it would be useful.
+    validations:
+      required: true
+
+  - type: textarea
+    id: workflow
+    attributes:
+      label: How should the agent work?
+      description: Describe its input, tools, decisions, and output.
+    validations:
+      required: true
+
+  - type: textarea
+    id: requirements
+    attributes:
+      label: Models and external services
+      description: List any models, APIs, wallets, networks, accounts, or other services it may need.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: free-path
+    attributes:
+      label: Can it run without a paid service?
+      options:
+        - "Yes"
+        - "Partially"
+        - "No"
+        - "Not sure yet"
+    validations:
+      required: true
+
+  - type: textarea
+    id: safety
+    attributes:
+      label: Safety and privacy considerations
+      description: Mention any permissions, sensitive information, payments, messages, bookings, or external actions involved.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: involvement
+    attributes:
+      label: How would you like to help?
+      options:
+        - label: I would like to build this agent
+        - label: I would like to help test this agent
+        - label: I am sharing the idea for someone else to explore
