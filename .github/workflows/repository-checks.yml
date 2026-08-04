@@ -1,0 +1,45 @@
+name: Repository Checks
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  repository-checks:
+    name: Validate repository
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Check required community files
+        run: |
+          test -f README.md
+          test -f CONTRIBUTING.md
+          test -f CODE_OF_CONDUCT.md
+          test -f SECURITY.md
+          test -f .github/pull_request_template.md
+          test -f community-agents/README.md
+
+      - name: Check for unresolved merge markers
+        run: |
+          if git grep -nE '^(<<<<<<<|=======|>>>>>>>)' -- .; then
+            echo "Unresolved Git merge markers were found."
+            exit 1
+          fi
+
+      - name: Check for committed environment files
+        run: |
+          tracked_env_files="$(git ls-files | grep -E '(^|/)\.env($|\.)' | grep -vE '(^|/)\.env\.example$' || true)"
+
+          if [ -n "$tracked_env_files" ]; then
+            echo "Environment files must not be committed:"
+            echo "$tracked_env_files"
+            exit 1
+          fi
