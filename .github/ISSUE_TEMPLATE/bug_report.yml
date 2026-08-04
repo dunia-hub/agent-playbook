@@ -1,0 +1,69 @@
+name: Bug report
+description: Report something that is not working correctly
+title: "[Bug]: "
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a problem. Please provide enough detail for someone else to reproduce it.
+
+  - type: input
+    id: affected_agent
+    attributes:
+      label: Affected agent or example
+      placeholder: Example: 04 Booking Agent
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Clearly describe the problem you encountered.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Run the command
+        2. Enter the example input
+        3. Observe the error
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include your operating system, browser, Node.js version, and any relevant tools.
+      placeholder: Ubuntu 24.04, Node.js 22, Chrome
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or screenshots
+      description: Remove secrets and private information before sharing.
+      render: shell
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation
+      options:
+        - label: I checked that this issue has not already been reported
+          required: true
+        - label: I removed secrets and private information from this report
+          required: true
