@@ -1,12 +1,13 @@
 {
   "name": "untangle-agent",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Untangle Agent: turns a chaotic brain-dump into structured tasks, groups, priorities, missing info, and next steps.",
   "type": "module",
   "private": true,
   "scripts": {
     "start": "node src/index.js",
-    "test": "node --test"
+    "test": "node --test",
+    "eval": "node eval/faithfulness.js"
   },
   "license": "MIT",
   "dependencies": {
