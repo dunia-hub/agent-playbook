@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+  <title>Dunia Hub Swap Agent</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body>
+  <main>
+    <p class="eyebrow">Dunia Hub · Agent Playbook</p>
+    <h1>Swap Agent</h1>
+
+    <p>
+      Review the prepared Solana Devnet swap, connect the expected
+      Phantom wallet, then approve signing in Phantom.
+    </p>
+
+    <section id="swap-card">
+      <h2>Prepared swap</h2>
+      <div id="details">Loading...</div>
+    </section>
+
+    <section>
+      <button id="connect-button">
+        Connect Phantom
+      </button>
+
+      <button id="submit-button" disabled>
+        Sign & Submit Swap
+      </button>
+    </section>
+
+    <p id="wallet-status"></p>
+    <p id="transaction-status"></p>
+  </main>
+
+  <script type="module" src="/main.js"></script>
+</body>
+</html>
