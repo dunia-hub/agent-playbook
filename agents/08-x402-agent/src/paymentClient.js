@@ -1,13 +1,7 @@
 import { x402Client } from "@x402/core/client";
 import { wrapFetchWithPayment } from "@x402/fetch";
 import { ExactEvmScheme } from "@x402/evm/exact/client";
-import { toClientEvmSigner } from "@x402/evm";
-import {
-  createPublicClient,
-  http,
-} from "viem";
 import { privateKeyToAccount } from "viem/accounts";
-import { baseSepolia } from "viem/chains";
 import { createPaymentPolicy } from "./policy.js";
 import {
   appendPaymentRecord,
@@ -43,16 +37,11 @@ export function createEvmPaymentClient(
   }
 
   const account = privateKeyToAccount(config.evmPrivateKey);
-  const publicClient = createPublicClient({
-    chain: baseSepolia,
-    transport: http(),
-  });
-  const signer = toClientEvmSigner(account, publicClient);
 
   const client = x402Client.fromConfig({
     schemes: evmNetworks.map((network) => ({
       network,
-      client: new ExactEvmScheme(signer),
+      client: new ExactEvmScheme(account),
     })),
     spendControls: {
       maxAmountPerPayment: `$${config.maxPaymentUsd}`,
@@ -130,7 +119,7 @@ export function createEvmPaymentClient(
   return {
     client,
     fetchWithPayment: wrapFetchWithPayment(fetchImpl, client),
-    signerAddress: signer.address,
+    signerAddress: account.address,
     networks: evmNetworks,
   };
 }

@@ -140,3 +140,41 @@ test("preserves an unknown asset amount without guessing decimals", () => {
     "250 0x9999999999999999999999999999999999999999",
   );
 });
+
+test("allows Avalanche Fuji USDC by its configured symbol", () => {
+  const fujiUsdc = getDefaultAsset("eip155:43113", "USDC");
+
+  const [result] = evaluatePaymentRequirements(
+    [
+      {
+        ...baseRequirement,
+        network: "eip155:43113",
+        asset: fujiUsdc.asset,
+        extra: {
+          name: fujiUsdc.name,
+          version: fujiUsdc.version,
+        },
+      },
+    ],
+    {
+      ...baseConfig,
+      allowedNetworks: ["eip155:43113"],
+    },
+  );
+
+  assert.equal(result.allowed, true);
+  assert.equal(result.assetSymbol, "USDC");
+  assert.deepEqual(result.reasons, []);
+});
+
+test("uses the official Circle USDC configuration for Fuji", () => {
+  const fujiUsdc = getDefaultAsset("eip155:43113", "USDC");
+
+  assert.deepEqual(fujiUsdc, {
+    asset: "0x5425890298aed601595a70AB815c96711a31Bc65",
+    symbol: "USDC",
+    decimals: 6,
+    name: "USD Coin",
+    version: "2",
+  });
+});

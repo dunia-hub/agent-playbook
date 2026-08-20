@@ -8,6 +8,15 @@ const assets = {
       version: "2",
     },
   ],
+  "eip155:43113": [
+    {
+      asset: "0x5425890298aed601595a70AB815c96711a31Bc65",
+      symbol: "USDC",
+      decimals: 6,
+      name: "USD Coin",
+      version: "2",
+    },
+  ],
 };
 
 export function getDefaultAsset(network, symbol = "USDC") {

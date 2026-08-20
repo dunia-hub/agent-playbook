@@ -10,7 +10,8 @@
     "resource-server": "node examples/paid-resource-server.js",
     "create-wallets": "node scripts/createTestWallets.js",
     "balance": "node scripts/checkBalance.js",
-    "verify": "node scripts/checkFacilitator.js"
+    "verify": "node scripts/checkFacilitator.js",
+    "facilitator": "node examples/local-facilitator.js"
   },
   "keywords": [],
   "author": "",

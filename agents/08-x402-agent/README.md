@@ -2,91 +2,118 @@
 
 The x402 Pay Per Call Agent is Agent 08 in the Dunia Hub Agent Playbook series.
 
-It discovers an x402 protected resource, reads the payment requirements, applies strict safety rules, asks for explicit approval, signs a testnet payment authorization, retries the request, and records the result.
+It discovers an x402-protected resource, reads its payment requirements, applies strict safety rules, asks for approval, signs a testnet payment authorization, retries the request, and records the settlement result.
+
+## Supported Networks
+
+| Network | CAIP-2 identifier | Payment asset |
+|---|---|---|
+| Base Sepolia | `eip155:84532` | Test USDC |
+| Avalanche Fuji | `eip155:43113` | Test USDC |
+
+Both networks use x402 protocol v2 with the EVM `exact` payment scheme.
 
 ## What It Does
 
 The agent:
 
-1. Sends a normal request to an online resource
+1. Requests an online resource normally
 2. Detects an HTTP 402 Payment Required response
 3. Decodes the x402 v2 `PAYMENT-REQUIRED` header
-4. Reads the amount, asset, network, recipient, and payment scheme
-5. Blocks payment options outside the configured rules
-6. Displays the exact payment in human readable form
-7. Requires the user to type `PAY` before signing
-8. Retries the request with an x402 payment signature
-9. Reads the settlement response
-10. Stores a local JSONL payment record
-11. Prevents repeat payments after successful or pending settlement
+4. Reads the amount, asset, network, recipient, and scheme
+5. Rejects payment options outside the configured rules
+6. Displays the exact payment in human-readable form
+7. Requires the user to type `PAY`
+8. Creates an EIP-712 payment authorization
+9. Retries the request with the payment signature
+10. Reads the settlement response
+11. Records the result in a local JSONL log
+12. Blocks repeated payments after settled or pending status
 
-## Current Implementation
+## Architecture
 
-The payment client currently supports:
+The workshop example contains three processes:
 
-* x402 protocol v2
-* Exact payments
-* Base Sepolia
-* Test USDC
-* EVM test wallets
-* Manual approval by default
-* Optional automatic approval with a required recipient allowlist
+1. The payment agent signs approved payment authorizations.
+2. The paid resource server protects the example API endpoints.
+3. The local facilitator verifies authorizations and submits settlement transactions.
 
-The discovery and policy layers are structured so additional network adapters can be added without changing the core decision flow.
+The payer signs an EIP-3009 USDC authorization and does not submit the settlement transaction directly. The facilitator submits that transaction and pays the network gas.
 
 ## Safety Rules
 
 The agent defaults to:
 
-* Testnet only
+* Testnets only
 * Maximum payment of `$0.10`
 * USDC only
-* Base Sepolia only
+* Explicitly registered networks
 * Manual approval
-* No unrestricted wallet access
+* No unrestricted wallet control
 * No committed private keys
-* No repeat payment after settled or pending status
+* Recipient allowlisting for automatic approval
+* Duplicate protection after settled or pending payments
 * Local payment records excluded from Git
 
-Automatic approval cannot be enabled unless at least one recipient address is explicitly allowed.
+Use disposable test wallets only. Never use a wallet containing real funds.
 
-Use disposable test wallets only. Never place a wallet containing real funds in this project.
+## Wallet Funding Roles
+
+| Wallet | Base Sepolia | Avalanche Fuji |
+|---|---|---|
+| Payer | Test USDC | Test USDC |
+| Facilitator | Test ETH for gas | Test AVAX for gas |
+| Receiver | No funding required | No funding required |
+
+The payer does not need native gas for the included x402 exact USDC flow.
+
+Test USDC is available from the [Circle testnet faucet](https://faucet.circle.com/).
+
+Test AVAX is available from the [Avalanche Builder Hub faucet](https://build.avax.network/console/primary-network/faucet).
+
+Base Sepolia test ETH must be obtained from a compatible Base Sepolia faucet.
 
 ## Requirements
 
 * Node.js 20 or newer
 * npm
-* A disposable Base Sepolia payer wallet
-* Base Sepolia test USDC
-* An x402 protected resource
+* Disposable payer and facilitator wallets
+* Test USDC for the payer on the selected network
+* Native test tokens for the facilitator on the selected network
 
 ## Install
 
 ```bash
 npm install
-```
+````
 
 ## Configure
 
-Copy the example environment file:
+Copy the example configuration:
 
 ```bash
 cp .env.example .env
 ```
 
-Set:
+At minimum, configure:
 
 ```env
-EVM_PRIVATE_KEY=0x_your_disposable_test_wallet_private_key
-X402_RESOURCE_URL=http://localhost:4021/weather
-X402_MAX_PAYMENT_USD=0.10
-X402_ALLOWED_NETWORKS=eip155:84532
+EVM_PRIVATE_KEY=0x_disposable_payer_private_key
+
+X402_ALLOWED_NETWORKS=eip155:84532,eip155:43113
 X402_ALLOWED_ASSETS=USDC
-X402_ALLOWED_RECIPIENTS=0x_expected_receiver
+X402_MAX_PAYMENT_USD=0.10
 X402_AUTO_APPROVE=false
-X402_LOG_PATH=./data/payments.jsonl
+
+X402_FACILITATOR_PRIVATE_KEY=0x_disposable_facilitator_private_key
 X402_SERVER_PAY_TO=0x_receiver_address
-X402_SERVER_PORT=4021
+```
+
+One facilitator wallet can be used on both networks, or separate network-specific keys can be configured:
+
+```env
+X402_BASE_FACILITATOR_PRIVATE_KEY=
+X402_FUJI_FACILITATOR_PRIVATE_KEY=
 ```
 
 Never commit or share `.env`.
@@ -99,21 +126,35 @@ If `.env` does not already exist:
 npm run create-wallets
 ```
 
-The command generates separate payer and receiver wallets, writes their private keys only to `.env`, and prints only their public addresses.
+The command generates disposable test wallets, writes their private keys only to `.env`, and prints only their public addresses.
 
-Get Base Sepolia test USDC for the payer from the Circle testnet faucet:
-
-https://faucet.circle.com/
-
-## Check the Payer Balance
+## Check Funding Readiness
 
 ```bash
 npm run balance
 ```
 
-## Run the Local Paid Resource
+The command displays payer and facilitator balances on both networks without creating or settling a payment.
 
-Start the genuine x402 protected example:
+## Run the End-to-End Example
+
+Use three terminals.
+
+### Terminal 1: Local Facilitator
+
+```bash
+npm run facilitator
+```
+
+The facilitator listens at:
+
+```text
+http://127.0.0.1:4022
+```
+
+Its `/supported` response advertises both Base Sepolia and Avalanche Fuji.
+
+### Terminal 2: Paid Resource Server
 
 ```bash
 npm run resource-server
@@ -122,28 +163,28 @@ npm run resource-server
 The server exposes:
 
 ```text
-http://localhost:4021/weather
+http://localhost:4021/weather/base
+http://localhost:4021/weather/avalanche
+http://localhost:4021/health
 ```
 
-It uses the public x402.org test facilitator for verification and settlement.
+Each paid weather request costs `0.01 USDC`.
 
-A non-settling simulator is also available:
+### Terminal 3: Payment Agent
+
+Base Sepolia:
 
 ```bash
-npm run mock-server
+npm start -- http://localhost:4021/weather/base
 ```
 
-The simulator advertises valid payment requirements but never accepts or settles funds.
-
-## Run the Agent
-
-In another terminal:
+Avalanche Fuji:
 
 ```bash
-npm start -- http://localhost:4021/weather
+npm start -- http://localhost:4021/weather/avalanche
 ```
 
-Before signing, the agent displays:
+Before signing, confirm:
 
 * Amount
 * Asset
@@ -153,17 +194,37 @@ Before signing, the agent displays:
 * Policy result
 * Payer address
 
-Type exactly `PAY` only after confirming every field.
+Type exactly `PAY` only when every field is correct.
 
 ## Verify Without Settling
 
-The verification diagnostic creates a fresh signed authorization and submits it only to the facilitator’s `/verify` endpoint:
+The diagnostic command creates a fresh signed authorization and submits it only to the facilitator’s `/verify` endpoint.
+
+Base Sepolia:
 
 ```bash
-npm run verify
+npm run verify -- http://localhost:4021/weather/base
 ```
 
-It cannot settle or transfer USDC.
+Avalanche Fuji:
+
+```bash
+npm run verify -- http://localhost:4021/weather/avalanche
+```
+
+Verification does not submit a settlement transaction or transfer USDC.
+
+The facilitator may simulate the token transfer during verification. The payer therefore needs enough test USDC for verification to succeed.
+
+## Mock Server
+
+A non-settling simulator is also included:
+
+```bash
+npm run mock-server
+```
+
+It advertises payment requirements but cannot verify or settle payments.
 
 ## Run Tests
 
@@ -173,6 +234,19 @@ npm test
 
 The test suite uses mocks and temporary files. It does not make live payments.
 
+Current coverage includes:
+
+* Safe configuration defaults
+* URL validation
+* x402 v2 discovery
+* Payment policy enforcement
+* Base Sepolia USDC
+* Avalanche Fuji USDC
+* Dual-network payment-client registration
+* Approval formatting
+* Payment record persistence
+* Settled and pending duplicate protection
+
 ## Payment Records
 
 Local records are written to:
@@ -181,14 +255,37 @@ Local records are written to:
 data/payments.jsonl
 ```
 
-Each exact resource and payment combination receives a deterministic payment ID. A settled or pending payment blocks another authorization for the same terms.
+Each resource and exact set of payment terms receives a deterministic payment ID.
 
-The log is excluded from Git because it can contain wallet addresses, transaction hashes, and resource history.
+A settled or pending payment blocks another authorization for the same resource and terms.
+
+The log is excluded from Git because it may contain wallet addresses, transaction hashes, and resource history.
+
+## Network Configuration
+
+### Base Sepolia
+
+```text
+CAIP-2: eip155:84532
+USDC: 0x036CbD53842c5426634e7929541eC2318f3dCF7e
+```
+
+### Avalanche Fuji
+
+```text
+CAIP-2: eip155:43113
+Chain ID: 43113
+RPC: https://api.avax-test.network/ext/bc/C/rpc
+USDC: 0x5425890298aed601595a70AB815c96711a31Bc65
+```
+
+The USDC addresses are published in the [Circle contract-address documentation](https://developers.circle.com/stablecoins/usdc-contract-addresses).
 
 ## Project Structure
 
 ```text
 examples/
+  local-facilitator.js
   mock-paid-server.js
   paid-resource-server.js
 scripts/
@@ -206,49 +303,65 @@ src/
 tests/
 ```
 
-## Facilitator Compatibility Note
+## Verification Status
 
-During the live Base Sepolia test on August 19, 2026:
+The local facilitator has successfully verified:
 
-* The payer held 20 test USDC
-* The server returned correct x402 v2 payment requirements
-* The agent created a standard 65 byte EIP-712 signature
-* The signature verified successfully with viem locally
-* x402 SDK versions 2.22.0 and 2.23.0 were tested
-* The public x402.org facilitator returned `invalid_exact_evm_signature`
-* No USDC moved
+* A Base Sepolia x402 authorization
+* An Avalanche Fuji x402 authorization through signature and contract validation
 
-This points to a current public facilitator verification issue rather than an invalid local signature. The agent preserves the failure reason and stops safely.
+The Avalanche verification reached the USDC balance simulation and correctly returned `invalid_exact_evm_insufficient_balance` for an unfunded payer. This confirms that the signature, network, asset contract, amount, recipient, and EIP-712 domain were accepted before the balance check.
+
+A complete onchain settlement still requires:
+
+* Base Sepolia test ETH in the Base facilitator wallet
+* Avalanche Fuji test USDC in the Fuji payer wallet
+* Avalanche Fuji test AVAX in the Fuji facilitator wallet
+
+## Public Facilitator Compatibility
+
+The included examples use the local facilitator by default for reproducible workshop testing.
+
+During testing, the public `x402.org` facilitator rejected an otherwise locally valid Base Sepolia authorization with `invalid_exact_evm_signature`. No USDC moved.
+
+The public facilitator can be tested by changing:
+
+```env
+X402_FACILITATOR_URL=https://x402.org/facilitator
+```
+
+External facilitator availability and behavior are outside this project’s control.
 
 ## Limitations
 
-* The included signer adapter currently pays on Base Sepolia only
-* Other x402 networks require their corresponding signer packages and wallets
-* The local JSONL log is not designed for concurrent processes
-* A resource may disappear or change its terms between discovery and payment
-* Public facilitator availability and behavior are external dependencies
+* Only EVM exact payments are implemented
+* The local facilitator must hold native test gas
+* The payer must hold the requested test USDC
+* The JSONL log is not designed for concurrent processes
+* A resource may change its terms between discovery and payment
+* Testnet faucets, RPC endpoints, and public facilitators are external services
 
 ## Multichain Extension Path
 
-Additional adapters can be added for:
+Future adapters can add:
 
 * Solana
 * Stellar
 * Aptos
 * Hedera
 * XRPL
-* Other compatible EVM networks
+* Additional EVM networks
 
-Each adapter must preserve the same controls:
+Every adapter must preserve:
 
 * Explicit network registration
 * Asset allowlisting
 * Recipient verification
-* Per payment limits
+* Per-payment limits
 * Approval before signing
 * Duplicate protection
 * Settlement logging
 
 ## Contributing
 
-Suggestions, safety improvements, new testnet adapters, and additional mocked failure cases are welcome.
+Suggestions, security improvements, additional network adapters, and mocked failure cases are welcome.

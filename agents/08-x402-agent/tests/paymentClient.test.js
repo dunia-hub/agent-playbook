@@ -44,3 +44,20 @@ test("creates a payment-enabled Base Sepolia client", () => {
   assert.deepEqual(result.networks, ["eip155:84532"]);
   assert.match(result.signerAddress, /^0x[0-9a-fA-F]{40}$/);
 });
+
+test("creates a payment client for Base Sepolia and Avalanche Fuji", () => {
+  const result = createEvmPaymentClient({
+    ...baseConfig,
+    allowedNetworks: [
+      "eip155:84532",
+      "eip155:43113",
+    ],
+  });
+
+  assert.equal(typeof result.fetchWithPayment, "function");
+  assert.deepEqual(result.networks, [
+    "eip155:84532",
+    "eip155:43113",
+  ]);
+  assert.match(result.signerAddress, /^0x[0-9a-fA-F]{40}$/);
+});

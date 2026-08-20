@@ -4,22 +4,24 @@
 
 The current implementation does not require an AI model.
 
-Payment discovery, validation, approval, signing, and logging are handled with deterministic code. This is intentional because a language model should not decide whether a wallet transaction is safe or bypass configured payment rules.
+Payment discovery, validation, approval, signing, settlement handling, and logging are implemented with deterministic code. This is intentional because a language model should not decide whether a wallet transaction is safe or bypass configured payment rules.
 
-An AI model may later help interpret a user request or explain payment requirements, but it must never:
+An AI model may later help interpret a user request or explain verified payment requirements, but it must never:
 
-- Access a private key
-- Create or modify a signature
-- Increase the payment limit
-- Change an allowed network
-- Add a recipient to the allowlist
-- Enable automatic approval
-- Override a blocked policy result
-- Claim that payment settled without evidence
+* Access a private key
+* Request or repeat a seed phrase
+* Create or modify a payment signature
+* Increase the payment limit
+* Change an allowed network
+* Change an allowed asset
+* Add a recipient to the allowlist
+* Enable automatic approval
+* Override a blocked policy result
+* Claim that payment settled without evidence
 
 ## Optional Request Interpretation Prompt
 
-Use this prompt only if a natural language request layer is added later.
+Use this prompt only if a natural-language request layer is added later.
 
 ```text
 You are the request interpretation layer for an x402 Pay Per Call Agent.
@@ -45,7 +47,7 @@ Resource Request
 Known Information
 Missing Information
 Safety Reminder
-````
+```
 
 ## Payment Explanation Template
 
@@ -78,7 +80,7 @@ What the User Must Verify
 
 ## Approval Boundary
 
-The final approval must remain deterministic and explicit.
+Final payment approval must remain deterministic and explicit.
 
 The user must see:
 
@@ -97,3 +99,39 @@ PAY
 ```
 
 Any other response must be treated as rejection.
+
+## Multichain Boundary
+
+Supporting multiple networks must not weaken the payment rules.
+
+For every network, the deterministic policy layer must:
+
+* Confirm that the network is explicitly allowed
+* Confirm that the payment scheme is supported
+* Resolve the asset using the correct network registry
+* Confirm that the asset is allowed
+* Compare EVM recipient addresses without case sensitivity
+* Apply the configured payment limit
+* Require approval before signing
+* Block settled or pending duplicate payments
+* Record the settlement result
+
+A language model must not select a different network, token, or recipient to bypass these controls.
+
+## Settlement Boundary
+
+A signed authorization is not proof of payment.
+
+The application may describe a payment as settled only when the facilitator returns a successful settlement response.
+
+The application must preserve and report:
+
+* Settlement success status
+* Transaction hash
+* Network
+* Settled amount when supplied
+* Error reason
+* Error message
+* Pending settlement status
+
+A verification result, locally valid signature, or submitted transaction is not enough to claim successful settlement.
