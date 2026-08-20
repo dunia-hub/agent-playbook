@@ -1,0 +1,33 @@
+{
+  "name": "x402-pay-per-call-agent",
+  "version": "1.0.0",
+  "description": "A safety-controlled x402 payment agent for the Dunia Hub Agent Playbook.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test",
+    "start": "node src/index.js",
+    "mock-server": "node examples/mock-paid-server.js",
+    "resource-server": "node examples/paid-resource-server.js",
+    "create-wallets": "node scripts/createTestWallets.js",
+    "balance": "node scripts/checkBalance.js",
+    "verify": "node scripts/checkFacilitator.js",
+    "facilitator": "node examples/local-facilitator.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "private": "true",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@x402/core": "^2.23.0",
+    "@x402/evm": "^2.23.0",
+    "@x402/express": "^2.23.0",
+    "@x402/fetch": "^2.23.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "viem": "^2.55.19"
+  }
+}
