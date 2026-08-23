@@ -6,7 +6,11 @@ import { readMultilineInput } from '../src/input.js';
 
 // --- Validation tests (no API calls) ---
 
-const goodResponse = `## Tasks
+const goodResponse = `## Decisions Already Made
+- date is next month
+## Contradictions
+- budget: 50k vs 200k
+## Tasks
 - lock a venue
 ## Grouped Ideas
 - venue and capacity
@@ -17,7 +21,7 @@ const goodResponse = `## Tasks
 ## Next Steps
 - make a signup form`;
 
-test('validate: accepts all five sections in order', () => {
+test('validate: accepts all seven sections in order', () => {
   const result = validateResponse(goodResponse);
   assert.equal(result.valid, true);
   assert.deepEqual(result.errors, []);
@@ -26,9 +30,11 @@ test('validate: accepts all five sections in order', () => {
 test('validate: rejects a response missing sections', () => {
   const result = validateResponse('## Tasks\n- a\n## Priorities\n- b');
   assert.equal(result.valid, false);
+  assert.ok(result.errors.some((e) => e.includes('Decisions Already Made')));
   assert.ok(result.errors.some((e) => e.includes('Grouped Ideas')));
   assert.ok(result.errors.some((e) => e.includes('Missing Info')));
   assert.ok(result.errors.some((e) => e.includes('Next Steps')));
+  assert.ok(result.errors.some((e) => e.includes('Contradictions')));
 });
 
 test('validate: rejects sections in the wrong order', () => {
@@ -41,7 +47,11 @@ test('validate: rejects sections in the wrong order', () => {
 ## Missing Info
 - d
 ## Next Steps
-- e`;
+- e
+## Decisions Already Made
+- f
+## Contradictions
+- g`;
   const result = validateResponse(wrongOrder);
   assert.equal(result.valid, false);
   assert.ok(result.errors.some((e) => e.toLowerCase().includes('order')));
@@ -50,6 +60,45 @@ test('validate: rejects sections in the wrong order', () => {
 test('validate: rejects empty input', () => {
   assert.equal(validateResponse('').valid, false);
   assert.equal(validateResponse('   ').valid, false);
+});
+
+test('validate: rejects section with no bullets', () => {
+  const noBullets = `## Decisions Already Made
+- something
+## Contradictions
+## Tasks
+- a
+## Grouped Ideas
+- b
+## Priorities
+- c
+## Missing Info
+- d
+## Next Steps
+- e`;
+  const result = validateResponse(noBullets);
+  assert.equal(result.valid, false);
+  assert.ok(result.errors.some((e) => e.includes('Contradictions') && e.includes('no bullet')));
+});
+
+test('validate: accepts section with empty lines before bullets', () => {
+  const withEmptyLines = `## Decisions Already Made
+
+- something
+## Contradictions
+- a vs b
+## Tasks
+- a
+## Grouped Ideas
+- b
+## Priorities
+- c
+## Missing Info
+- d
+## Next Steps
+- e`;
+  const result = validateResponse(withEmptyLines);
+  assert.equal(result.valid, true);
 });
 
 // --- Input parsing tests (fake stream, no keyboard) ---
