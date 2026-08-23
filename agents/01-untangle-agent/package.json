@@ -4,6 +4,9 @@
   "description": "Untangle Agent: turns a chaotic brain-dump into structured tasks, groups, priorities, missing info, and next steps.",
   "type": "module",
   "private": true,
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "start": "node src/index.js",
     "test": "node --test",
