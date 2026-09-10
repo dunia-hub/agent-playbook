@@ -1,0 +1,15 @@
+{
+  "title": "Agent Playbook check-in",
+  "durationMinutes": 45,
+  "windowStart": "2026-09-16T13:00:00+03:00",
+  "windowEnd": "2026-09-16T17:00:00+03:00",
+  "timeZone": "Africa/Nairobi",
+  "attendees": [
+    {
+      "name": "Amina",
+      "email": "amina@example.com"
+    }
+  ],
+  "location": "Dunia Hub Google Meet room",
+  "notes": "Review the Booking Agent workshop plan."
+}
