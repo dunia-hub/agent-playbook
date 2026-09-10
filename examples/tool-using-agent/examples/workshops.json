@@ -1,0 +1,22 @@
+{
+  "workshops": [
+    {
+      "id": "01-untangle-agent",
+      "title": "Untangle Agent",
+      "date": "2026-09-14",
+      "format": "Online"
+    },
+    {
+      "id": "02-smart-contract-reader",
+      "title": "Smart Contract Reader",
+      "date": "2026-09-15",
+      "format": "Online"
+    },
+    {
+      "id": "03-research-agent",
+      "title": "Research Agent",
+      "date": "2026-09-16",
+      "format": "Online"
+    }
+  ]
+}

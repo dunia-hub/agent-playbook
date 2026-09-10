@@ -1,0 +1,14 @@
+{
+  "name": "agent-playbook-community-example",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A contribution-readiness agent for community submissions.",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

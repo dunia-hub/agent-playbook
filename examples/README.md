@@ -1,17 +1,34 @@
 # Agent Examples
 
-This directory contains small examples that explain common agent patterns before builders work on the full workshop projects.
+This directory contains small, runnable examples that explain common agent
+patterns before builders work on the full workshop projects.
 
-## Basic Agent
+| Example | Pattern | External service |
+| --- | --- | --- |
+| [Basic Agent](./basic-agent) | Input, decision rules, structured response | None |
+| [Tool Using Agent](./tool-using-agent) | Tool selection, tool call, grounded answer | None |
+| [Community Agent](./community-agent) | Validation, readiness checks, human handoff | None |
 
-A simple agent that receives an input, follows clear instructions, and returns a structured response.
+Every example:
 
-## Tool Using Agent
+- Runs locally with Node.js 20 or newer
+- Uses ES modules and the built-in Node.js test runner
+- Works without an API key or paid AI service
+- Keeps decisions separate from formatting
+- Includes a README, example input, and tests
 
-An agent that chooses and calls a tool to retrieve information or complete a task.
+## Quick start
 
-## Community Agent
+Each folder is an independent project. Choose one and run its documented
+command. For example:
 
-A starter example showing how builders can organize and submit their own agent to Agent Playbook.
+```bash
+cd examples/basic-agent
+npm install
+npm test
+npm start -- --file examples/request.txt
+```
 
-Each example will remain small, readable, and usable without a paid AI service.
+These examples favor clarity over production complexity. The projects in
+[`../agents`](../agents) demonstrate fuller workflows, model integration,
+policy controls, and more extensive testing.
