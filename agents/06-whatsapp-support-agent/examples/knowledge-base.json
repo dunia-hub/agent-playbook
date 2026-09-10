@@ -1,0 +1,67 @@
+{
+  "articles": [
+    {
+      "id": "meeting-link-en",
+      "language": "en",
+      "title": "Workshop meeting links",
+      "keywords": ["meeting link", "Google Meet", "workshop", "join"],
+      "answer": "The Google Meet link is included in the event confirmation and reminder. Please check the email address used to register and the event page before the workshop begins."
+    },
+    {
+      "id": "meeting-link-sw",
+      "language": "sw",
+      "title": "Viungo vya mikutano ya warsha",
+      "keywords": ["kiungo", "Google Meet", "warsha", "kujiunga"],
+      "answer": "Kiungo cha Google Meet kinapatikana kwenye ujumbe wa kuthibitisha usajili na ukumbusho wa tukio. Tafadhali angalia barua pepe uliyotumia kujisajili na ukurasa wa tukio kabla ya warsha kuanza."
+    },
+    {
+      "id": "meeting-link-fr",
+      "language": "fr",
+      "title": "Liens de réunion des ateliers",
+      "keywords": ["lien", "Google Meet", "atelier", "rejoindre"],
+      "answer": "Le lien Google Meet figure dans la confirmation d’inscription et le rappel de l’événement. Vérifiez l’adresse e-mail utilisée lors de l’inscription et la page de l’événement avant le début de l’atelier."
+    },
+    {
+      "id": "registration-en",
+      "language": "en",
+      "title": "Workshop registration",
+      "keywords": ["register", "registration", "sign up", "seat"],
+      "answer": "Register through the official event page. A successful registration produces a confirmation message; submitting the form alone does not guarantee a place when capacity is limited."
+    },
+    {
+      "id": "registration-sw",
+      "language": "sw",
+      "title": "Usajili wa warsha",
+      "keywords": ["kujisajili", "usajili", "nafasi", "warsha"],
+      "answer": "Jisajili kupitia ukurasa rasmi wa tukio. Usajili uliofanikiwa hutoa ujumbe wa uthibitisho; kujaza fomu pekee hakuhakikishi nafasi ikiwa idadi ya washiriki ni ndogo."
+    },
+    {
+      "id": "registration-fr",
+      "language": "fr",
+      "title": "Inscription aux ateliers",
+      "keywords": ["inscription", "inscrire", "place", "atelier"],
+      "answer": "Inscrivez-vous sur la page officielle de l’événement. Une inscription réussie génère une confirmation; l’envoi du formulaire seul ne garantit pas une place si la capacité est limitée."
+    },
+    {
+      "id": "certificate-en",
+      "language": "en",
+      "title": "Workshop participation records",
+      "keywords": ["certificate", "attendance", "completion", "proof"],
+      "answer": "Any participation record offered for a workshop will be described on that event’s page. Do not assume a certificate is included unless the event details explicitly say so."
+    },
+    {
+      "id": "certificate-sw",
+      "language": "sw",
+      "title": "Rekodi za kushiriki warsha",
+      "keywords": ["cheti", "mahudhurio", "kukamilisha", "uthibitisho"],
+      "answer": "Rekodi yoyote ya ushiriki inayotolewa itaelezwa kwenye ukurasa wa tukio. Usidhani kuwa cheti kinatolewa isipokuwa maelezo ya tukio yaseme hivyo wazi."
+    },
+    {
+      "id": "certificate-fr",
+      "language": "fr",
+      "title": "Justificatifs de participation",
+      "keywords": ["certificat", "présence", "participation", "preuve"],
+      "answer": "Tout justificatif de participation proposé sera indiqué sur la page de l’événement. Ne supposez pas qu’un certificat est inclus sauf si les détails de l’événement le précisent clairement."
+    }
+  ]
+}

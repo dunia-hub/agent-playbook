@@ -1,0 +1,7 @@
+{
+  "language": "sw",
+  "confidence": 0.98,
+  "intent": "meeting_link",
+  "searchTerms": ["kiungo", "Google Meet", "warsha"],
+  "urgency": "normal"
+}
