@@ -1,0 +1,15 @@
+{
+  "name": "agent-playbook-community-validator",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "description": "Read-only validation tooling for Agent Playbook community contributions.",
+  "scripts": {
+    "validate": "node src/index.js",
+    "test": "node --test test/*.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
