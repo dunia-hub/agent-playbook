@@ -1,0 +1,14 @@
+{
+  "name": "agent-playbook-tool-using-example",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A local tool-selection agent grounded in a workshop catalog.",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

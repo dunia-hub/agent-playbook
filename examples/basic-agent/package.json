@@ -1,0 +1,14 @@
+{
+  "name": "agent-playbook-basic-example",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A minimal deterministic agent that returns a structured action summary.",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

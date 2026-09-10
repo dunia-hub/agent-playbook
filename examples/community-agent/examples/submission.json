@@ -1,0 +1,12 @@
+{
+  "name": "Workshop FAQ Agent",
+  "slug": "workshop-faq-agent",
+  "purpose": "Answer frequently asked workshop questions from a reviewed local knowledge base.",
+  "runCommand": "npm start",
+  "testCommand": "npm test",
+  "safety": [
+    "Do not invent an answer when the knowledge base has no match.",
+    "Do not expose personal attendee information."
+  ],
+  "externalServices": []
+}
