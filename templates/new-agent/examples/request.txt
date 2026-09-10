@@ -1,0 +1,1 @@
+Help me prepare a short checklist for reviewing my new community agent before I open a pull request.

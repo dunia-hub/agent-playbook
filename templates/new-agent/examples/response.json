@@ -1,0 +1,15 @@
+{
+  "summary": "Prepare a focused pre-submission review for the community agent.",
+  "actions": [
+    "Run the complete test suite.",
+    "Check the documentation against the implemented behavior.",
+    "Review the staged diff for secrets and unrelated files."
+  ],
+  "assumptions": [
+    "The agent already has a runnable implementation."
+  ],
+  "safetyNotes": [
+    "Do not commit API keys, private data, or generated dependency folders.",
+    "Document external actions and require approval before irreversible steps."
+  ]
+}
