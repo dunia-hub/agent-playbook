@@ -1,0 +1,19 @@
+{
+  "name": "04-booking-agent",
+  "version": "1.0.0",
+  "description": "A confirmation-first booking agent that parses requests, checks availability, and prepares calendar invites.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "groq-sdk": "^1.5.0"
+  }
+}

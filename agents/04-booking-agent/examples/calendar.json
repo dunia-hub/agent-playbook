@@ -1,0 +1,27 @@
+{
+  "owner": {
+    "name": "Dunia Hub",
+    "email": "hello@duniahub.xyz",
+    "timeZone": "Africa/Nairobi"
+  },
+  "slotStepMinutes": 15,
+  "minimumNoticeMinutes": 60,
+  "availability": [
+    {
+      "start": "2026-09-16T09:00:00+03:00",
+      "end": "2026-09-16T17:00:00+03:00"
+    }
+  ],
+  "busy": [
+    {
+      "start": "2026-09-16T13:00:00+03:00",
+      "end": "2026-09-16T14:00:00+03:00",
+      "title": "Community call"
+    },
+    {
+      "start": "2026-09-16T15:00:00+03:00",
+      "end": "2026-09-16T15:30:00+03:00",
+      "title": "Workshop preparation"
+    }
+  ]
+}
