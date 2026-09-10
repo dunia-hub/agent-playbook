@@ -1,0 +1,7 @@
+{
+  "name": "ERC-20 token transfer",
+  "gasLimit": "65000",
+  "baseFeeMultiplier": 2,
+  "budgetUsd": 0.05,
+  "maxFeeGwei": 40
+}

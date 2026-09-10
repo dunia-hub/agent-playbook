@@ -1,0 +1,22 @@
+{
+  "networks": [
+    {
+      "name": "Base Sepolia",
+      "chainId": 84532,
+      "currencySymbol": "ETH",
+      "source": "rpc",
+      "rpcEnv": "BASE_SEPOLIA_RPC_URL",
+      "staleAfterSeconds": 300,
+      "nativeTokenPriceUsd": 2400
+    },
+    {
+      "name": "Avalanche Fuji",
+      "chainId": 43113,
+      "currencySymbol": "AVAX",
+      "source": "rpc",
+      "rpcEnv": "AVALANCHE_FUJI_RPC_URL",
+      "staleAfterSeconds": 300,
+      "nativeTokenPriceUsd": 30
+    }
+  ]
+}
