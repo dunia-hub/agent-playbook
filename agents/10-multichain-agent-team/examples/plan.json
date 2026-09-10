@@ -1,0 +1,34 @@
+{
+  "goal": "Prepare a testnet welcome-reward plan for three Agent Playbook demos",
+  "executionMode": "plan_only",
+  "operations": [
+    {
+      "id": "base-demo",
+      "network": "base-sepolia",
+      "action": "prepare_native_transfer",
+      "destination": "0x1111111111111111111111111111111111111111",
+      "amount": "0.002",
+      "dependsOn": []
+    },
+    {
+      "id": "solana-demo",
+      "network": "solana-devnet",
+      "action": "prepare_native_transfer",
+      "destination": "4wBqpZM9xaSheZzJSMawUKKwhdpChKbZ5eu5ky4Vigw",
+      "amount": "0.1",
+      "dependsOn": ["base-demo"]
+    },
+    {
+      "id": "stellar-demo",
+      "network": "stellar-testnet",
+      "action": "prepare_native_transfer",
+      "destination": "GD7757P47P5PT6HX6327J47S6HYO73XN5TV6V2PI47TOLZHD4LQ6AE5T",
+      "amount": "5",
+      "dependsOn": ["solana-demo"]
+    }
+  ],
+  "notes": [
+    "This is a testnet planning exercise only.",
+    "No transfer should be signed or submitted by the agent team."
+  ]
+}

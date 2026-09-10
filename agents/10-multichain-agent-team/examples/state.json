@@ -1,0 +1,25 @@
+{
+  "networks": {
+    "base-sepolia": {
+      "balance": "0.05",
+      "estimatedFee": "0.00001",
+      "minimumReserve": "0.005",
+      "observedAt": "2026-09-10T08:00:00Z",
+      "staleAfterSeconds": 86400
+    },
+    "solana-devnet": {
+      "balance": "2",
+      "estimatedFee": "0.000005",
+      "minimumReserve": "0.05",
+      "observedAt": "2026-09-10T08:00:00Z",
+      "staleAfterSeconds": 86400
+    },
+    "stellar-testnet": {
+      "balance": "50",
+      "estimatedFee": "0.00001",
+      "minimumReserve": "1",
+      "observedAt": "2026-09-10T08:00:00Z",
+      "staleAfterSeconds": 86400
+    }
+  }
+}
