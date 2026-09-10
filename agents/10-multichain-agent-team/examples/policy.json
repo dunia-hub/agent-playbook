@@ -1,0 +1,11 @@
+{
+  "testnetOnly": true,
+  "requireFreshState": true,
+  "maxOperations": 6,
+  "allowedActions": ["prepare_native_transfer"],
+  "maxTransferByNetwork": {
+    "base-sepolia": "0.01",
+    "solana-devnet": "0.5",
+    "stellar-testnet": "10"
+  }
+}

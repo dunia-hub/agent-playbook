@@ -1,0 +1,6 @@
+Prepare a plan-only testnet welcome reward across three ecosystems. First prepare
+0.002 ETH on Base Sepolia for 0x1111111111111111111111111111111111111111.
+After that, prepare 0.1 SOL on Solana Devnet for
+4wBqpZM9xaSheZzJSMawUKKwhdpChKbZ5eu5ky4Vigw. Finally, prepare 5 XLM on
+Stellar Testnet for GD7757P47P5PT6HX6327J47S6HYO73XN5TV6V2PI47TOLZHD4LQ6AE5T.
+Do not sign or submit anything.

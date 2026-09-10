@@ -1,0 +1,28 @@
+{
+  "networks": [
+    {
+      "id": "base-sepolia",
+      "name": "Base Sepolia",
+      "family": "evm",
+      "testnet": true,
+      "nativeAsset": { "symbol": "ETH", "decimals": 18 },
+      "explorerUrl": "https://sepolia.basescan.org"
+    },
+    {
+      "id": "solana-devnet",
+      "name": "Solana Devnet",
+      "family": "solana",
+      "testnet": true,
+      "nativeAsset": { "symbol": "SOL", "decimals": 9 },
+      "explorerUrl": "https://explorer.solana.com/?cluster=devnet"
+    },
+    {
+      "id": "stellar-testnet",
+      "name": "Stellar Testnet",
+      "family": "stellar",
+      "testnet": true,
+      "nativeAsset": { "symbol": "XLM", "decimals": 7 },
+      "explorerUrl": "https://stellar.expert/explorer/testnet"
+    }
+  ]
+}
