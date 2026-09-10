@@ -1,0 +1,37 @@
+{
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "business-account-demo",
+      "changes": [
+        {
+          "field": "messages",
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "254700000000",
+              "phone_number_id": "phone-number-id-demo"
+            },
+            "contacts": [
+              {
+                "profile": { "name": "Demo participant" },
+                "wa_id": "254711111111"
+              }
+            ],
+            "messages": [
+              {
+                "from": "254711111111",
+                "id": "wamid.agent-playbook-06-demo",
+                "timestamp": "1789020000",
+                "text": {
+                  "body": "Habari, nimejisajili kwa warsha. Kiungo cha Google Meet kitatumwa lini?"
+                },
+                "type": "text"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

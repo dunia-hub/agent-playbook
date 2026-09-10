@@ -1,0 +1,24 @@
+{
+  "supportedLanguages": ["en", "sw", "fr"],
+  "fallbackLanguage": "en",
+  "minimumLanguageConfidence": 0.75,
+  "highRiskRules": [
+    {
+      "label": "account compromise or lost funds",
+      "terms": ["hacked", "stolen funds", "account compromised", "imeibiwa", "pesa zimepotea", "compte piraté", "fonds volés"]
+    },
+    {
+      "label": "human requested",
+      "terms": ["human agent", "speak to a person", "mtu halisi", "ongea na mtu", "agent humain", "parler à une personne"]
+    },
+    {
+      "label": "payment dispute",
+      "terms": ["charged twice", "unauthorized payment", "nimelipishwa mara mbili", "malipo bila ruhusa", "facturé deux fois", "paiement non autorisé"]
+    }
+  ],
+  "escalationReplies": {
+    "en": "Thanks for explaining. A human support teammate needs to review this safely. Your message has not been resolved automatically.",
+    "sw": "Asante kwa maelezo. Msaidizi wa huduma kwa wateja anahitaji kukagua ujumbe huu kwa usalama. Ujumbe wako haujatatuliwa kiotomatiki.",
+    "fr": "Merci pour ces informations. Un membre de l’équipe d’assistance doit examiner ce message. Votre demande n’a pas été résolue automatiquement."
+  }
+}
